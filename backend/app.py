@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os, base64, requests, datetime
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)  # 🔥 enables requests from React (port 5173)
 
 # Get credentials
 consumer_key = os.getenv('CONSUMER_KEY')
