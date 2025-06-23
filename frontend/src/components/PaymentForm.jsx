@@ -22,6 +22,11 @@ const PaymentForm = () => {
       return
     }
 
+    if (!phone.match(/^2547\d{8}$/)) {
+      setStatus('Enter valid Safaricom number (e.g. 2547XXXXXXXX)')
+      return
+    }
+
     setLoading(true)
     setStatus('')
 
@@ -30,7 +35,8 @@ const PaymentForm = () => {
         phone,
         amount
       })
-      setStatus(res.data?.ResponseDescription || 'Request sent')
+
+      setStatus(res.data?.ResponseDescription || 'STK Push Sent')
     } catch (err) {
       setStatus('Payment failed or server error')
     } finally {
@@ -80,7 +86,14 @@ const PaymentForm = () => {
         </Box>
 
         {status && (
-          <Typography mt={3} align="center" color="text.secondary" fontSize="14px">
+          <Typography
+            mt={3}
+            align="center"
+            sx={{
+              color: status.toLowerCase().includes('fail') ? 'error.main' : 'text.secondary',
+              fontSize: '14px'
+            }}
+          >
             {status}
           </Typography>
         )}
